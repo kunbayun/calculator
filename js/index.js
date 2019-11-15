@@ -5,13 +5,20 @@ document.querySelectorAll('.calc .keys button, .calc .opers button')
 function keyOperPressed(event) {
     const btnText = event.target.innerText;
     display.value += btnText;
+    if (/[+-/*%]/.test(this.value) && /[+-/*%]$/.test(display.value)) {
+    display.value = display.value.replace(display.value[display.value.length - 1], '');
+  }
 }
 
 document.querySelector('.calc .equal')
     .addEventListener('click', equalPressed);
 
 function equalPressed() {
-    display.value = eval(display.value);
+    if (eval(display.value) === Infinity) {
+        display.value = 'You cannot divide by 0';
+    } else {
+        display.value = eval(display.value);
+    }    
 }
 
 document.querySelector('.calc .clean')
